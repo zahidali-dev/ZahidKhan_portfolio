@@ -39,12 +39,16 @@ const About = () => {
             Hi, I am
           </h1>
 
-          {/* Zahid: white, Ali: animated gradient */}
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-4 leading-tight transition-all duration-500 flex flex-wrap justify-center md:justify-start items-center gap-x-2">
-            <span className="text-white">Zahid</span>
-            <span className="animate-gradient-x font-extrabold bg-gradient-to-r from-yellow-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-              Ali
-            </span>
+          {/* Zahid Ali Name: Black by default, gradient on hover */}
+          <h2
+            className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-4 leading-tight transition-all duration-500 hover:bg-gradient-to-r hover:from-purple-400 hover:via-pink-500 hover:to-indigo-400 hover:text-transparent hover:bg-clip-text"
+            style={{
+              color: 'black',
+              backgroundClip: 'initial',
+              WebkitBackgroundClip: 'initial',
+            }}
+          >
+            Zahid Ali
           </h2>
 
           {/* Dynamic Typing Effect */}
@@ -70,13 +74,6 @@ const About = () => {
         </div>
       </div>
       <style>{`
-        @keyframes gradient-x {
-          0%,100%{background-size:200% 200%;background-position:left center;}
-          50%{background-size:200% 200%;background-position:right center;}
-        }
-        .animate-gradient-x {
-          animation: gradient-x 3s ease-in-out infinite;
-        }
         @media (max-width: 400px) {
           .max-w-xl { max-width: 90vw; }
           .sm\\:text-4xl { font-size: 2rem; }

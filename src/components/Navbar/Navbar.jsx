@@ -2,37 +2,31 @@ import React, { useState, useEffect } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 
-// Helper for typing effect
-const useTypingEffect = (text, speed = 170, hold = 1200) => {
-  const [displayed, setDisplayed] = useState("");
+const Navbar = () => {
+  // Typing effect state
+  const [displayedText, setDisplayedText] = useState("");
+  const text = "Software Engineer";
   useEffect(() => {
-    let idx = 0;
-    let holdTimeout;
+    let i = 0;
+    let fullTimeout;
     const interval = setInterval(() => {
-      setDisplayed((prev) => {
-        if (idx < text.length) {
-          const next = prev + text[idx];
-          idx++;
-          return next;
-        } else {
-          holdTimeout = setTimeout(() => {
-            setDisplayed("");
-            idx = 0;
-          }, hold);
-          clearInterval(interval);
-          return prev;
-        }
-      });
-    }, speed);
+      setDisplayedText(text.slice(0, i + 1));
+      i++;
+      if (i > text.length) {
+        clearInterval(interval);
+        fullTimeout = setTimeout(() => {
+          setDisplayedText("");
+          i = 0;
+        }, 1500);
+      }
+    }, 130);
     return () => {
       clearInterval(interval);
-      clearTimeout(holdTimeout);
+      clearTimeout(fullTimeout);
     };
-  }, [text, speed, hold]);
-  return displayed;
-};
+  }, [text]);
 
-const Navbar = () => {
+  // Navbar state
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [isScrolled, setIsScrolled] = useState(false);
@@ -45,10 +39,7 @@ const Navbar = () => {
     { id: "education", label: "Education" },
     { id: "contact", label: "Contact" },
   ];
-  const text = "Software Engineer";
-  const displayedText = useTypingEffect(text);
 
-  // Active section on scroll
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -78,9 +69,9 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Title top-left, never merges! */}
-      <div className="fixed top-2 left-2 z-50 w-[80vw] max-w-[200px] xs:max-w-[240px] sm:max-w-[300px] md:max-w-[340px] pointer-events-none">
-        <h2 className="font-bold text-base xs:text-lg sm:text-2xl md:text-4xl text-white cursor-default flex flex-wrap space-x-1 whitespace-nowrap">
+      {/* HERO TITLE (top left, never overlaps) */}
+      <div className="fixed top-2 left-2 z-50 w-[65vw] max-w-[170px] xs:max-w-[200px] sm:max-w-[250px] md:max-w-[300px] pointer-events-none">
+        <h2 className="font-bold text-base xs:text-lg sm:text-xl md:text-2xl text-white cursor-default flex flex-wrap space-x-1 whitespace-nowrap">
           {displayedText.split("").map((char, idx) => (
             <span
               key={idx}
@@ -98,8 +89,8 @@ const Navbar = () => {
         </h2>
       </div>
 
-      {/* Social icons top-right, never merges! */}
-      <div className="fixed top-2 right-2 z-50 flex gap-2 xs:gap-3 sm:gap-4 md:gap-5">
+      {/* SOCIAL LINKS (right, spaced from hamburger) */}
+      <div className="fixed top-2 right-14 z-50 flex gap-2 xs:gap-3 sm:gap-4 md:gap-5">
         <a
           href="https://github.com/zahidali-dev"
           target="_blank"
@@ -120,13 +111,27 @@ const Navbar = () => {
         </a>
       </div>
 
-      {/* Navbar */}
+      {/* HAMBURGER (always far right, never overlaps links) */}
+      <div className="fixed top-2 right-2 z-50 md:hidden">
+        <button
+          aria-label={isOpen ? "Close navigation" : "Open navigation"}
+          className="p-2 text-[#8245ec] bg-[#050414] bg-opacity-70 rounded-lg transition-transform hover:scale-110"
+          onClick={() => setIsOpen((prev) => !prev)}
+        >
+          {isOpen ? (
+            <FiX className="text-3xl" />
+          ) : (
+            <FiMenu className="text-3xl" />
+          )}
+        </button>
+      </div>
+
+      {/* DESKTOP NAVBAR */}
       <nav
         className={`fixed top-0 left-0 w-full z-40 transition duration-300 px-4 xs:px-6 sm:px-[7vw] lg:px-[16vw] 
           ${isScrolled ? "bg-[#050414] bg-opacity-80 backdrop-blur-md shadow-md" : "bg-transparent"}`}
       >
         <div className="flex justify-end items-center py-3 sm:py-5 text-white relative">
-          {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-4 sm:space-x-8 ml-auto">
             {menuItems.map((item) => (
               <button
@@ -140,28 +145,15 @@ const Navbar = () => {
               </button>
             ))}
           </div>
-          {/* Mobile Menu Icon */}
-          <div className="md:hidden flex items-center ml-auto">
-            <button
-              aria-label={isOpen ? "Close navigation" : "Open navigation"}
-              className="p-2 text-[#8245ec] transition-transform hover:scale-110"
-              onClick={() => setIsOpen(prev => !prev)}
-            >
-              {isOpen ? (
-                <FiX className="text-3xl" />
-              ) : (
-                <FiMenu className="text-3xl" />
-              )}
-            </button>
-          </div>
         </div>
-        {/* Mobile Menu */}
+
+        {/* MOBILE MENU */}
         <div
           className={`md:hidden overflow-hidden transition-all duration-300 ${
             isOpen ? "max-h-[330px]" : "max-h-0"
           }`}
         >
-          <ul className="flex flex-col items-center space-y-4 py-4 bg-[#050414] bg-opacity-90 backdrop-blur-lg rounded-lg shadow-lg text-gray-300">
+          <ul className="flex flex-col items-center space-y-4 py-4 bg-[#050414] bg-opacity-95 backdrop-blur-lg rounded-lg shadow-lg text-gray-300">
             {menuItems.map((item) => (
               <li
                 key={item.id}
@@ -197,4 +189,5 @@ const Navbar = () => {
     </>
   );
 };
+
 export default Navbar;

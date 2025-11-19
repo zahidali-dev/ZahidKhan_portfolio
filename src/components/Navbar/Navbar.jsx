@@ -32,8 +32,7 @@ const Navbar = () => {
         }
         return next;
       });
-    }, 250); // slower typing speed
-
+    }, 250);
     return () => clearInterval(interval);
   }, []);
 
@@ -67,8 +66,8 @@ const Navbar = () => {
   return (
     <>
       {/* Hero left-top */}
-      <div className="fixed top-5 left-5 z-50">
-        <h2 className="font-bold text-3xl sm:text-4xl cursor-default flex space-x-1">
+      <div className="fixed top-2 left-2 z-50 sm:top-5 sm:left-5">
+        <h2 className="font-bold text-2xl sm:text-3xl md:text-4xl cursor-default flex space-x-1">
           {displayedText.split("").map((char, idx) => (
             <span
               key={idx}
@@ -88,15 +87,13 @@ const Navbar = () => {
 
       {/* Navbar */}
       <nav
-        className={`fixed top-0 w-full z-40 transition duration-300 px-[7vw] lg:px-[16vw] ${
-          isScrolled
-            ? "bg-[#050414] bg-opacity-50 backdrop-blur-md shadow-md"
-            : "bg-transparent"
-        }`}
+        className={`fixed top-0 left-0 w-full z-40 transition duration-300 px-4 sm:px-[7vw] lg:px-[16vw] 
+          ${isScrolled ? "bg-[#050414] bg-opacity-80 backdrop-blur-md shadow-md"
+                       : "bg-transparent"}`}
       >
-        <div className="flex justify-end items-center py-5 text-white relative">
+        <div className="flex justify-end items-center py-3 sm:py-5 text-white relative">
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8 ml-auto">
+          <div className="hidden md:flex items-center space-x-6 lg:space-x-8 ml-auto">
             {menuItems.map((item) => (
               <button
                 key={item.id}
@@ -114,12 +111,12 @@ const Navbar = () => {
           <div className="md:hidden z-50">
             {isOpen ? (
               <FiX
-                className="text-3xl text-[#8245ec] cursor-pointer transition-transform transform hover:scale-110"
+                className="text-2xl sm:text-3xl text-[#8245ec] cursor-pointer transition-transform transform hover:scale-110"
                 onClick={() => setIsOpen(false)}
               />
             ) : (
               <FiMenu
-                className="text-3xl text-[#8245ec] cursor-pointer transition-transform transform hover:scale-110"
+                className="text-2xl sm:text-3xl text-[#8245ec] cursor-pointer transition-transform transform hover:scale-110"
                 onClick={() => setIsOpen(true)}
               />
             )}
@@ -129,10 +126,10 @@ const Navbar = () => {
         {/* Mobile Menu */}
         <div
           className={`md:hidden overflow-hidden transition-all duration-300 ${
-            isOpen ? "max-h-[500px]" : "max-h-0"
+            isOpen ? "max-h-[400px]" : "max-h-0"
           }`}
         >
-          <ul className="flex flex-col items-center space-y-4 py-4 bg-[#050414] bg-opacity-50 backdrop-blur-lg rounded-lg shadow-lg text-gray-300">
+          <ul className="flex flex-col items-center space-y-4 py-4 bg-[#050414] bg-opacity-90 backdrop-blur-lg rounded-lg shadow-lg text-gray-300">
             {menuItems.map((item) => (
               <li
                 key={item.id}
@@ -150,14 +147,14 @@ const Navbar = () => {
       </nav>
 
       {/* GitHub & LinkedIn */}
-      <div className="fixed top-5 right-5 flex space-x-4 z-50">
+      <div className="fixed top-2 right-2 sm:top-5 sm:right-5 flex space-x-2 sm:space-x-4 z-50">
         <a
           href="https://github.com/zahidali-dev"
           target="_blank"
           rel="noopener noreferrer"
           className="text-gray-300 hover:text-[#8245ec] transition-transform transform hover:scale-110"
         >
-          <FaGithub size={24} />
+          <FaGithub size={22} className="sm:size-[24px]" />
         </a>
         <a
           href="https://www.linkedin.com/in/zahid-ali-499612344/"
@@ -165,7 +162,7 @@ const Navbar = () => {
           rel="noopener noreferrer"
           className="text-gray-300 hover:text-[#8245ec] transition-transform transform hover:scale-110"
         >
-          <FaLinkedin size={24} />
+          <FaLinkedin size={22} className="sm:size-[24px]" />
         </a>
       </div>
 
@@ -174,12 +171,10 @@ const Navbar = () => {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(-6px); }
         }
-
         @keyframes blink {
           0%, 50%, 100% { opacity: 1; }
           25%, 75% { opacity: 0; }
         }
-
         .animate-blink {
           animation: blink 1s step-start infinite;
         }

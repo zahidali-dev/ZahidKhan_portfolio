@@ -39,16 +39,10 @@ const About = () => {
             Hi, I am
           </h1>
 
-          {/* Zahid Ali Name: Black by default, gradient on hover */}
-          <h2
-            className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-4 leading-tight transition-all duration-500 hover:bg-gradient-to-r hover:from-purple-400 hover:via-pink-500 hover:to-indigo-400 hover:text-transparent hover:bg-clip-text"
-            style={{
-              color: 'black',
-              backgroundClip: 'initial',
-              WebkitBackgroundClip: 'initial',
-            }}
-          >
-            Zahid Ali
+          {/* Zahid Ali Name: Zahid white, Ali yellow */}
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-4 leading-tight transition-all duration-500">
+            <span className="text-white">Zahid </span>
+            <span className="text-yellow-400">Ali</span>
           </h2>
 
           {/* Dynamic Typing Effect */}

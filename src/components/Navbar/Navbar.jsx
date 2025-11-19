@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 
-// Professional one-line typing
+// Single line, letter by letter professional typing effect
 const useTypingEffect = (text, speed = 120, hold = 1400) => {
   const [typed, setTyped] = useState("");
   useEffect(() => {
@@ -45,7 +45,7 @@ const Navbar = () => {
     { id: "contact", label: "Contact" },
   ];
 
-  // Single line, letter by letter!
+  // Professional one-line typing effect
   const heroText = useTypingEffect("Software Engineer");
 
   useEffect(() => {
@@ -140,6 +140,7 @@ const Navbar = () => {
           ${isScrolled ? "bg-[#050414] bg-opacity-80 backdrop-blur-md shadow-md" : "bg-transparent"}`}
       >
         <div className="flex justify-end items-center py-3 sm:py-5 text-white relative">
+          {/* Desktop Menu - all links */}
           <div className="hidden md:flex items-center space-x-4 sm:space-x-8 ml-auto">
             {menuItems.map((item) => (
               <button
@@ -154,28 +155,30 @@ const Navbar = () => {
             ))}
           </div>
         </div>
-        {/* Mobile Menu */}
+        {/* Mobile Menu - only contact link */}
         <div
           className={`md:hidden overflow-hidden transition-all duration-300 ${
-            isOpen ? "max-h-[330px]" : "max-h-0"
+            isOpen ? "max-h-[120px]" : "max-h-0"
           }`}
         >
           <ul className="flex flex-col items-center space-y-4 py-4 bg-[#050414] bg-opacity-95 backdrop-blur-lg rounded-lg shadow-lg text-gray-300">
-            {menuItems.map((item) => (
-              <li
-                key={item.id}
-                className={`cursor-pointer hover:text-[#8245ec] ${
-                  activeSection === item.id ? "text-[#8245ec]" : ""
-                } transition-colors duration-300`}
-              >
-                <button
-                  className="w-full text-lg font-medium py-2 px-4"
-                  onClick={() => handleMenuItemClick(item.id)}
+            {menuItems
+              .filter((item) => item.id === "contact")
+              .map((item) => (
+                <li
+                  key={item.id}
+                  className={`cursor-pointer hover:text-[#8245ec] ${
+                    activeSection === item.id ? "text-[#8245ec]" : ""
+                  } transition-colors duration-300`}
                 >
-                  {item.label}
-                </button>
-              </li>
-            ))}
+                  <button
+                    className="w-full text-lg font-medium py-2 px-4"
+                    onClick={() => handleMenuItemClick(item.id)}
+                  >
+                    {item.label}
+                  </button>
+                </li>
+              ))}
           </ul>
         </div>
       </nav>

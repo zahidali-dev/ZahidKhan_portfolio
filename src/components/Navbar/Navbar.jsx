@@ -155,30 +155,28 @@ const Navbar = () => {
             ))}
           </div>
         </div>
-        {/* Mobile Menu - only contact link */}
+        {/* Mobile Menu - all links */}
         <div
           className={`md:hidden overflow-hidden transition-all duration-300 ${
-            isOpen ? "max-h-[120px]" : "max-h-0"
+            isOpen ? "max-h-[330px]" : "max-h-0"
           }`}
         >
           <ul className="flex flex-col items-center space-y-4 py-4 bg-[#050414] bg-opacity-95 backdrop-blur-lg rounded-lg shadow-lg text-gray-300">
-            {menuItems
-              .filter((item) => item.id === "contact")
-              .map((item) => (
-                <li
-                  key={item.id}
-                  className={`cursor-pointer hover:text-[#8245ec] ${
-                    activeSection === item.id ? "text-[#8245ec]" : ""
-                  } transition-colors duration-300`}
+            {menuItems.map((item) => (
+              <li
+                key={item.id}
+                className={`cursor-pointer hover:text-[#8245ec] ${
+                  activeSection === item.id ? "text-[#8245ec]" : ""
+                } transition-colors duration-300`}
+              >
+                <button
+                  className="w-full text-lg font-medium py-2 px-4"
+                  onClick={() => handleMenuItemClick(item.id)}
                 >
-                  <button
-                    className="w-full text-lg font-medium py-2 px-4"
-                    onClick={() => handleMenuItemClick(item.id)}
-                  >
-                    {item.label}
-                  </button>
-                </li>
-              ))}
+                  {item.label}
+                </button>
+              </li>
+            ))}
           </ul>
         </div>
       </nav>

@@ -2,31 +2,47 @@ import React, { useState, useEffect } from "react";
 import { FiMenu, FiX } from "react-icons/fi";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 
-const Navbar = () => {
-  // Typing effect state
-  const [displayedText, setDisplayedText] = useState("");
-  const text = "Software Engineer";
+// Typing effect with two lines
+const useHeroTyping = () => {
+  const line1 = "Software";
+  const line2 = "Engineer";
+  const [row, setRow] = useState(0);        // 0 (Software), 1 (Engineer), 2 (pause)
+  const [text, setText] = useState("");
   useEffect(() => {
-    let i = 0;
-    let fullTimeout;
-    const interval = setInterval(() => {
-      setDisplayedText(text.slice(0, i + 1));
-      i++;
-      if (i > text.length) {
-        clearInterval(interval);
-        fullTimeout = setTimeout(() => {
-          setDisplayedText("");
-          i = 0;
-        }, 1500);
-      }
-    }, 130);
-    return () => {
-      clearInterval(interval);
-      clearTimeout(fullTimeout);
-    };
-  }, [text]);
+    let idx = 0;
+    let timer;
+    if (row === 0) {
+      timer = setInterval(() => {
+        setText(line1.slice(0, idx + 1));
+        idx++;
+        if (idx > line1.length) {
+          clearInterval(timer);
+          setTimeout(() => {
+            setRow(1);
+          }, 800);
+        }
+      }, 110);
+    } else if (row === 1) {
+      timer = setInterval(() => {
+        setText(line2.slice(0, idx + 1));
+        idx++;
+        if (idx > line2.length) {
+          clearInterval(timer);
+          setTimeout(() => setRow(2), 1200);
+        }
+      }, 110);
+    } else {
+      setTimeout(() => {
+        setRow(0);
+        setText("");
+      }, 700);
+    }
+    return () => clearInterval(timer);
+  }, [row]);
+  return { row, text, line1, line2 };
+};
 
-  // Navbar state
+const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [isScrolled, setIsScrolled] = useState(false);
@@ -37,8 +53,11 @@ const Navbar = () => {
     { id: "experience", label: "Experience" },
     { id: "work", label: "Projects" },
     { id: "education", label: "Education" },
-    { id: "contact", label: "Contact" },
+    { id: "contact", label: "Contact" },  // << Contact is here!
   ];
+
+  // Typing two-line hero
+  const hero = useHeroTyping();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -69,27 +88,23 @@ const Navbar = () => {
 
   return (
     <>
-      {/* HERO TITLE (top left, never overlaps) */}
-      <div className="fixed top-2 left-2 z-50 w-[65vw] max-w-[170px] xs:max-w-[200px] sm:max-w-[250px] md:max-w-[300px] pointer-events-none">
-        <h2 className="font-bold text-base xs:text-lg sm:text-xl md:text-2xl text-white cursor-default flex flex-wrap space-x-1 whitespace-nowrap">
-          {displayedText.split("").map((char, idx) => (
-            <span
-              key={idx}
-              className="transition-transform duration-300 hover:scale-125 hover:bg-clip-text hover:text-transparent hover:bg-gradient-to-r hover:from-purple-400 hover:via-pink-500 hover:to-indigo-400"
-              style={{
-                display: "inline-block",
-                animation: `wave 1.2s ease-in-out infinite`,
-                animationDelay: `${idx * 0.07}s`,
-              }}
-            >
-              {char === " " ? "\u00A0" : char}
-            </span>
-          ))}
-          <span className="animate-blink">|</span>
-        </h2>
+      {/* HERO TITLE - Two Lines */}
+      <div className="fixed top-2 left-2 z-50 w-[80vw] max-w-[180px] xs:max-w-[230px] sm:max-w-[260px] md:max-w-[310px] pointer-events-none">
+        <div className="flex flex-col space-y-0.5">
+          <h2 className="font-bold text-base xs:text-lg sm:text-xl md:text-2xl text-white cursor-default min-h-[1.5em]">
+            {hero.row === 0 ? hero.text : hero.line1}
+            {hero.row === 2 && hero.line1}
+            <span className="animate-blink">|</span>
+          </h2>
+          <h2 className="font-bold text-base xs:text-lg sm:text-xl md:text-2xl text-white cursor-default min-h-[1.5em]">
+            {hero.row === 1 ? hero.text : hero.row === 2 ? hero.line2 : ""}
+            {hero.row === 0 && ""}
+            <span className="animate-blink">|</span>
+          </h2>
+        </div>
       </div>
 
-      {/* SOCIAL LINKS (right, spaced from hamburger) */}
+      {/* SOCIAL LINKS - right, spaced from hamburger */}
       <div className="fixed top-2 right-14 z-50 flex gap-2 xs:gap-3 sm:gap-4 md:gap-5">
         <a
           href="https://github.com/zahidali-dev"
@@ -111,7 +126,7 @@ const Navbar = () => {
         </a>
       </div>
 
-      {/* HAMBURGER (always far right, never overlaps links) */}
+      {/* HAMBURGER - far right, never overlaps links */}
       <div className="fixed top-2 right-2 z-50 md:hidden">
         <button
           aria-label={isOpen ? "Close navigation" : "Open navigation"}
@@ -126,7 +141,7 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* DESKTOP NAVBAR */}
+      {/* Navbar & Menu */}
       <nav
         className={`fixed top-0 left-0 w-full z-40 transition duration-300 px-4 xs:px-6 sm:px-[7vw] lg:px-[16vw] 
           ${isScrolled ? "bg-[#050414] bg-opacity-80 backdrop-blur-md shadow-md" : "bg-transparent"}`}
@@ -146,8 +161,7 @@ const Navbar = () => {
             ))}
           </div>
         </div>
-
-        {/* MOBILE MENU */}
+        {/* Mobile Menu */}
         <div
           className={`md:hidden overflow-hidden transition-all duration-300 ${
             isOpen ? "max-h-[330px]" : "max-h-0"
@@ -172,7 +186,6 @@ const Navbar = () => {
           </ul>
         </div>
       </nav>
-
       <style>{`
         @keyframes wave {
           0%, 100% { transform: translateY(0); }
@@ -189,5 +202,4 @@ const Navbar = () => {
     </>
   );
 };
-
 export default Navbar;

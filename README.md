@@ -5,7 +5,7 @@ A sleek, responsive, and fully customizable animated portfolio website built usi
 
 🚀 Live Demo
 
-🔗 https://zahid-dev-unub-mpb7abacl-zahid-alis-projects-c45ed1e3.vercel.app
+🔗 zahid-dev-unub.vercel.app
 )
 
 🛠️ Tech Stack

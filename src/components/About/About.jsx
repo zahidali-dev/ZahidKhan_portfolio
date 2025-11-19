@@ -14,11 +14,10 @@ const About = () => {
       <div className="absolute bottom-1/4 right-1/5 w-60 h-60 bg-gradient-to-tr from-indigo-500 via-purple-400 to-pink-400 opacity-30 rounded-full blur-2xl animate-blob animation-delay-1000 z-0"></div>
 
       <div className="relative flex flex-col md:flex-row justify-between items-center md:items-start w-full max-w-7xl mx-auto z-10">
-        
         {/* Profile Image */}
         <div className="md:w-1/2 flex justify-center md:justify-end mb-8 md:mb-0 order-first md:order-last">
           <Tilt
-            className="w-40 h-40 sm:w-48 sm:h-48 md:w-72 md:h-72 border-4 border-gradient-to-r from-purple-400 via-pink-500 to-indigo-400 rounded-full shadow-xl transition-transform duration-500 hover:scale-105 hover:shadow-2xl"
+            className="w-32 h-32 xs:w-40 xs:h-40 sm:w-48 sm:h-48 md:w-72 md:h-72 border-4 border-gradient-to-r from-purple-400 via-pink-500 to-indigo-400 rounded-full shadow-xl transition-transform duration-500 hover:scale-105 hover:shadow-2xl"
             tiltMaxAngleX={15}
             tiltMaxAngleY={15}
             perspective={1000}
@@ -35,12 +34,20 @@ const About = () => {
         </div>
 
         {/* Text Section */}
-        <div className="md:w-1/2 text-center md:text-left mt-4 md:mt-0">
+        <div className="md:w-1/2 text-center md:text-left mt-4 md:mt-0 max-w-xl mx-auto">
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-2 leading-tight transition-all duration-500 hover:text-purple-400">
             Hi, I am
           </h1>
 
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-500 to-indigo-400 animate-gradient-x mb-4 leading-tight">
+          {/* Zahid Ali Name: Black by default, gradient on hover */}
+          <h2
+            className="text-4xl sm:text-5xl md:text-6xl font-extrabold mb-4 leading-tight transition-all duration-500 hover:bg-gradient-to-r hover:from-purple-400 hover:via-pink-500 hover:to-indigo-400 hover:text-transparent hover:bg-clip-text"
+            style={{
+              color: 'black',
+              backgroundClip: 'initial',
+              WebkitBackgroundClip: 'initial',
+            }}
+          >
             Zahid Ali
           </h2>
 
@@ -66,6 +73,12 @@ const About = () => {
           </a>
         </div>
       </div>
+      <style>{`
+        @media (max-width: 400px) {
+          .max-w-xl { max-width: 90vw; }
+          .sm\\:text-4xl { font-size: 2rem; }
+        }
+      `}</style>
     </section>
   );
 };

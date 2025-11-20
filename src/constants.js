@@ -102,7 +102,6 @@ export const education = [
   {
     id: 1,
     school: "Good Luck Grammer High School Kazi Ahmed Nawabshah",
-    degree: "Matric",
     date: "2018-2020",
     grade: "A",
     desc: "Completed Matriculation with a focus on science subjects. Built a strong foundation in Mathematics, Physics, Chemistry, and Computer Basics, while participating in extracurricular activities and school competitions.",
